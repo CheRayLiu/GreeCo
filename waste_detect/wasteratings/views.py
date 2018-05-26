@@ -21,8 +21,11 @@ def mapratings(request, longlo, longhi, latlo, lathi, timelo, timehi):
 	ratings = Rating.objects.filter(longitude__range=(longlo,longhi)
 									, latitude__range=(latlo,lathi)
 									, date__gte = datetime.now() - timedelta(days=timelo)
-									, date__lt = datetime.now() - timedelta(days=timehi))
-	response = ""
+									, date__lt = datetime.now() - timedelta(days=timehi)
+									)
+	steps = 10
+	#loop from left to right and up to down, creating equally spaced points with the right weights (average of the points in that box)
+	response = "" # return JSON string containing latitude / longitude of points, and their weights (for the Google Maps API)
 	for rating in ratings:
 		response += str(rating.rating) + "<br>"
 	return HttpResponse(response)
