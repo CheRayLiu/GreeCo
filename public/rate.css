@@ -51,10 +51,11 @@ body {
 	display: flex; flex-direction: row-reverse; justify-content: center;
 }
 
-.fas{
+.fa-leaf{
 	color: #5A6268;
 	padding: 3px;
 	margin: 2px;
+	-webkit-transition: .7s ease-in-out;
 }
 
 .fas:hover{
@@ -65,9 +66,18 @@ body {
 .fa-leaf:hover ~ .fa-leaf, .fa-leaf:hover{
    	color: rgba(17, 191, 110, 0.9);	
    	-webkit-transition: all .5s ease-in-out;
-    transition: all .5s ease-in-out
+    transition: all .5s ease-in-out;
 }
 
-.fa-leaf:active{
-
+/*grey*/
+.grey{
+	color: #5A6268;
+}
+/*green*/
+.green{
+	color: rgba(17, 191, 110, 0.9);	
+}
+label > input{ 
+  visibility: hidden; 
+  position: absolute; 
 }
