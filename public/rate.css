@@ -1,26 +1,13 @@
-body {
-    padding-top: 5rem;
-    font-family: "Source Sans Pro","Helvetica Neue",Helvetica,Arial,sans-serif;
-}
-:hover {
-    -webkit-transition: all .5s ease-in-out;
-    transition: all .5s ease-in-out
-}
-.starter-template {
-    padding: 3rem 1.5rem;
-    text-align: center;
-}
 .side-template{
 	padding: 3rem 1.5rem;
     text-align: center;
 }
-.map-container{
-    border: solid blue;
-    margin-top: 1.5rem;
+
+.display-none{
+	display: none;
 }
 
 /* BUTTON STYLES */
-
 .btn{
 	margin: 2px;
 	padding: 3px 6px;
@@ -47,7 +34,7 @@ body {
 
 /*leaves*/
 
-.leaves{
+.leavesContainer{
 	display: flex; flex-direction: row-reverse; justify-content: center;
 }
 
@@ -63,21 +50,18 @@ body {
 	
 }
 
-.fa-leaf:hover ~ .fa-leaf, .fa-leaf:hover{
-   	color: rgba(17, 191, 110, 0.9);	
-   	-webkit-transition: all .5s ease-in-out;
-    transition: all .5s ease-in-out;
-}
-
+/* LEAF STYLE*/
 /*grey*/
 .grey{
 	color: #5A6268;
 }
 /*green*/
 .green{
-	color: rgba(17, 191, 110, 0.9);	
+	color: rgba(17, 191, 110, 0.9);
+	-webkit-transition: all .5s ease-in-out;
+	transition: all .5s ease-in-out;
+	animation-direction: reverse;
 }
-label > input{ 
-  visibility: hidden; 
-  position: absolute; 
-}
+
+/*Hide radio button*/
+.leaves {display:none}
