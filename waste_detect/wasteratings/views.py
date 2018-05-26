@@ -16,7 +16,7 @@ def viewratings(request, longlo, longhi, latlo, lathi):
 		response += str(rating.rating) + "<br>"
 	return HttpResponse(response)
 
-# Map ratings
+# Map ratings based on longitude, latitude and date range in days
 def mapratings(request, longlo, longhi, latlo, lathi, timelo, timehi):
 	ratings = Rating.objects.filter(longitude__range=(longlo,longhi)
 									, latitude__range=(latlo,lathi)
