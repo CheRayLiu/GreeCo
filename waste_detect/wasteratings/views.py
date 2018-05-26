@@ -17,11 +17,10 @@ def viewratings(request, longlo, longhi, latlo, lathi):
 	return HttpResponse(response)
 
 # Map ratings based on longitude, latitude and date range in days
-def mapratings(request, longlo, longhi, latlo, lathi, timelo, timehi):
-	ratings = Rating.objects.filter(longitude__range=(longlo,longhi)
-									, latitude__range=(latlo,lathi)
-									, date__gte = datetime.now() - timedelta(days=timelo)
-									, date__lt = datetime.now() - timedelta(days=timehi)
+def mapratings(request, longlo, longhi, latlo, lathi, timeframe):
+	ratings = Rating.objects.filter(longitude__range=(longlo,longhi)						#filter by longitude range
+									, latitude__range=(latlo,lathi)							#filter by latitude range
+									, date__lte = datetime.now() - timedelta(days=timeframe)	#timeframe selected by user (days) -- lte means less than or equal to
 									)
 	steps = 10
 	#loop from left to right and up to down, creating equally spaced points with the right weights (average of the points in that box)
