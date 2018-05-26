@@ -1,0 +1,73 @@
+body {
+    padding-top: 5rem;
+    font-family: "Source Sans Pro","Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+:hover {
+    -webkit-transition: all .5s ease-in-out;
+    transition: all .5s ease-in-out
+}
+.starter-template {
+    padding: 3rem 1.5rem;
+    text-align: center;
+}
+.side-template{
+	padding: 3rem 1.5rem;
+    text-align: center;
+}
+.map-container{
+    border: solid blue;
+    margin-top: 1.5rem;
+}
+
+/* BUTTON STYLES */
+
+.btn{
+	margin: 2px;
+	padding: 3px 6px;
+	width: 100px;
+	max-width: 110px;
+	font-size: 13px;
+	border-radius: 5px;
+	background-color: lightgray;
+	border: 1px  solid;
+}
+
+.btn:hover{
+	transform: translateY(-1px);
+	box-shadow: 0 5px 10px rgba(0,0,0,.1);
+}
+
+.btn:active{
+	transform: translate(-1px);
+}
+
+.btn-green{
+	border-color: rgba(17, 191, 110, 0.9);
+}
+
+/*leaves*/
+
+.leaves{
+	display: flex; flex-direction: row-reverse; justify-content: center;
+}
+
+.fas{
+	color: #5A6268;
+	padding: 3px;
+	margin: 2px;
+}
+
+.fas:hover{
+	transform: translateY(-1px);
+	
+}
+
+.fa-leaf:hover ~ .fa-leaf, .fa-leaf:hover{
+   	color: rgba(17, 191, 110, 0.9);	
+   	-webkit-transition: all .5s ease-in-out;
+    transition: all .5s ease-in-out
+}
+
+.fa-leaf:active{
+
+}
