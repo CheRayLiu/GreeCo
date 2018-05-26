@@ -37,6 +37,8 @@ def mapratings(request, longlo, longhi, latlo, lathi, timeframe):
 	long =[]
 	lat =[]
 	avgrate =[]
+	points = 100	# take maximum this many points per box
+	days = 90 		# consider points this up to this many days before the slider
 
 
 	longrange = np.arange(longlo,longhi,dlong).tolist()
@@ -48,13 +50,13 @@ def mapratings(request, longlo, longhi, latlo, lathi, timeframe):
 		for y in latrange:
 			ratings = Rating.objects.filter(longitude__range=(x,x+dlong)						#filter by longitude range
 									, latitude__range=(y,y+dlat)							#filter by latitude range
-									, date__range = (date - timedelta(days=90), date)	#timeframe selected by user (days) -- lte means less than or equal to
-									)[:100]
+									, date__range = (date - timedelta(days=days), date)	#timeframe selected by user (days) -- lte means less than or equal to
+									)[:points]
 			sum = 0.0
 			totalWeight = 0.0
 			for rating in ratings:
 				timeDiff = date - rating.date
-				weight = sqrt(-(timeDiff.days) + 100)
+				weight = sqrt(-(timeDiff.days) + days)	# weight function
 				totalWeight += weight
 				sum+=rating.rating * weight
 			if ratings.count() == 0:
