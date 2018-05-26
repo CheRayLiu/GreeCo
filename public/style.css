@@ -5,3 +5,8 @@ body {
     padding: 3rem 1.5rem;
     text-align: center;
 }
+
+.map-container{
+    border: solid blue;
+    margin-top: 1.5rem;
+}
