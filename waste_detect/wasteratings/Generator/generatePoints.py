@@ -3,7 +3,7 @@ from datetime import datetime,timedelta
 import random
 def points():
 
-	longhi, longlo, lathi, latlo = -79.313432,-79.437372 ,43.752594,43.634184
+	longlo, longhi, latlo, lathi = -79.437372,-79.313432,43.634184, 43.752594
 	dlong = longhi -longlo
 	dlat =	lathi - latlo
 
