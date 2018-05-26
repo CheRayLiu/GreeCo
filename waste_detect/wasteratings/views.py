@@ -48,7 +48,7 @@ def mapratings(request, longlo, longhi, latlo, lathi, timeframe):
 		for y in latrange:
 			ratings = Rating.objects.filter(longitude__range=(x,x+dlong)						#filter by longitude range
 									, latitude__range=(y,y+dlat)							#filter by latitude range
-									, date__lte = date	#timeframe selected by user (days) -- lte means less than or equal to
+									, date__range = (date - timedelta(days=90), date)	#timeframe selected by user (days) -- lte means less than or equal to
 									)[:100]
 			sum = 0.0
 			totalWeight = 0.0
