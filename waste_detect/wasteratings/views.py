@@ -1,12 +1,14 @@
 from django.http import HttpResponse
 from .models import Rating
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 import json 
 import numpy as np
+from math import sqrt
 
 # Insert a new ratings into the database at the given location
 def newrating(request, long, lat, rating):
-	newrating = Rating(longitude = float(long), latitude= float(lat), rating = rating)
+	requestParams = json.reads(request.body)
+	newrating = Rating(longitude = requestParams["long"], latitude= requestParams["lat"], rating = requestParams["rating"])
 	newrating.save()
 	return HttpResponse(0)
 
@@ -40,19 +42,25 @@ def mapratings(request, longlo, longhi, latlo, lathi, timeframe):
 	longrange = np.arange(longlo,longhi,dlong).tolist()
 	latrange = np.arange(latlo,lathi ,dlat).tolist()
 
+	date = datetime.now(timezone.utc) - timedelta(days=timeframe)
+
 	for x in longrange:
 		for y in latrange:
 			ratings = Rating.objects.filter(longitude__range=(x,x+dlong)						#filter by longitude range
 									, latitude__range=(y,y+dlat)							#filter by latitude range
-									, date__lte = datetime.now() - timedelta(days=timeframe)	#timeframe selected by user (days) -- lte means less than or equal to
-									)
-			sum =0;
+									, date__lte = date	#timeframe selected by user (days) -- lte means less than or equal to
+									)[:100]
+			sum = 0.0
+			totalWeight = 0.0
 			for rating in ratings:
-				sum+=rating.rating
+				timeDiff = date - rating.date
+				weight = sqrt(-(timeDiff.days) + 100)
+				totalWeight += weight
+				sum+=rating.rating * weight
 			if ratings.count() == 0:
 				avg = 0
 			else:
-				avg = float(sum) /ratings.count()
+				avg = float(sum) / totalWeight
 			long += [x+dlong/2]
 			lat += [y+dlat/2]
 			avgrate+=[avg]
