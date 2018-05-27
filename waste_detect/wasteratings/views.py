@@ -25,16 +25,16 @@ def mapratings(request):
 	
 	rbody =request.body
 	body = json.loads(rbody)
-	longlo = body['longloJ']
-	longhi = body['longhiJ']
-	latlo = body['latloJ']
-	lathi = body['lathiJ']
+	longlo = -90#body['longloJ']
+	longhi = 90#body['longhiJ']
+	latlo = -90#body['latloJ']
+	lathi = 90#body['lathiJ']
 	
 	#loop from left to right and up to down, creating equally spaced points with the right weights (average of the points in that box)
 
 
 
-	
+	days = 90
 
 	long =[]
 	lat =[]
@@ -46,8 +46,8 @@ def mapratings(request):
 	
 	ratings = Rating.objects.filter(longitude__range=(longlo,longhi)						#filter by longitude range
 									, latitude__range=(latlo,lathi)							#filter by latitude range
-									, date__range = (date - timedelta(days=days), date)	#timeframe selected by user (days) -- lte means less than or equal to
-									)[:points]
+									#, date__range = (date - timedelta(days=days), date)	#timeframe selected by user (days) -- lte means less than or equal to
+									)
 
 	
 	for rating in ratings:
