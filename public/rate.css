@@ -45,6 +45,10 @@
 	-webkit-transition: .7s ease-in-out;
 }
 
+a>.fa-leaf{
+	color: #ffffff;
+}
+
 .fas:hover{
 	transform: translateY(-1px);
 	
