@@ -66,9 +66,10 @@ def mapratings(request):
 				avg = 0
 			else:
 				avg = float(sum) / totalWeight
-			long += [x+dlong/2]
-			lat += [y+dlat/2]
-			avgrate+=[avg]
+			if avg > 0:
+				long += [x+dlong/2]
+				lat += [y+dlat/2]
+				avgrate+=[avg]
 
 	response = {'long': long, 'lat': lat, 'wt': avgrate}
 
