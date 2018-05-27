@@ -97,6 +97,7 @@ function getLocation() {
         // Browser doesn't support Geolocation
         handleLocationError(false, infoWindow, map.getCenter());
     }
+}
 
 function handleLocationError(browserHasGeolocation, infoWindow, pos) {
     infoWindow.setPosition(pos);
@@ -114,7 +115,7 @@ function getPoints(lng, lat, rat) {
             {location: new google.maps.LatLng(lat[i], lng[i]), weight:rat[i]}
             );
     }
-    return result
+    return result;
 }
 
 function getLeafN(){
@@ -146,15 +147,15 @@ function addRating() {
 
     xhr.readystatechange = function(){
         if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200){
-            //alert("Success");
+            alert("Success");
 
         }
         else{
-            //alert("Error");
+            alert("Error");
         }
     }
     xhr.send(params);
 
 }
 
-init()
+init();
