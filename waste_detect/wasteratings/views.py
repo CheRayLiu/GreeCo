@@ -21,13 +21,53 @@ def viewratings(request, longlo, longhi, latlo, lathi):
 
 # Map ratings based on longitude, latitude and date range in days
 def mapratings(request, longlo, longhi, latlo, lathi, timeframe):
-	ratings = Rating.objects.filter(longitude__range=(longlo,longhi)						#filter by longitude range
-									, latitude__range=(latlo,lathi)							#filter by latitude range
-									, date__lte = datetime.now() - timedelta(days=timeframe)	#timeframe selected by user (days) -- lte means less than or equal to
-									)
+	longlo = float(longlo)
+	longhi = float(longhi)
+	latlo = float(latlo)
+	lathi = float(lathi)
 	steps = 10
 	#loop from left to right and up to down, creating equally spaced points with the right weights (average of the points in that box)
-	response = "" # return JSON string containing latitude / longitude of points, and their weights (for the Google Maps API)
-	for rating in ratings:
-		response += str(rating.rating) + "<br>"
-	return HttpResponse(response)
+
+
+
+	dlong = (longhi - longlo) / steps
+	dlat = (lathi - latlo) / steps
+
+	long =[]
+	lat =[]
+	avgrate =[]
+	points = 100	# take maximum this many points per box
+	days = 90 		# consider points this up to this many days before the slider
+
+
+	longrange = np.arange(longlo,longhi,dlong).tolist()
+	latrange = np.arange(latlo,lathi ,dlat).tolist()
+
+	date = datetime.now(timezone.utc) - timedelta(days=timeframe)
+
+	for x in longrange:
+		for y in latrange:
+			ratings = Rating.objects.filter(longitude__range=(x,x+dlong)						#filter by longitude range
+									, latitude__range=(y,y+dlat)							#filter by latitude range
+									, date__range = (date - timedelta(days=days), date)	#timeframe selected by user (days) -- lte means less than or equal to
+									)[:points]
+			sum = 0.0
+			totalWeight = 0.0
+			for rating in ratings:
+				timeDiff = date - rating.date
+				weight = sqrt(-(timeDiff.days) + days)	# weight function
+				totalWeight += weight
+				sum+=rating.rating * weight
+			if ratings.count() == 0:
+				avg = 0
+			else:
+				avg = float(sum) / totalWeight
+			long += [x+dlong/2]
+			lat += [y+dlat/2]
+			avgrate+=[avg]
+
+	response = {'long': long, 'lat': lat, 'wt': avgrate}
+
+	responsestr = json.dumps(response)
+
+	return HttpResponse(responsestr)
