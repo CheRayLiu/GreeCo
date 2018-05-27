@@ -157,4 +157,4 @@ function addRating() {
 
 }
 
-init()
+init();
