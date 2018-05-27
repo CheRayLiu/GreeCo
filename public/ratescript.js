@@ -34,10 +34,9 @@ function initRateMap(lng, lat, rat) {
     heatmap = new google.maps.visualization.HeatmapLayer({
         data: getPoints(lng, lat, rat),
         map: map,
-        //gradient: gradient,
-        dissipating: false,
-        maxIntensity: 50,
-        radius: 2
+        radius: 75,
+        dissipating: true,
+        maxIntensity: 5
     })
 
     //google.maps.event.addListener(map, "", function() {
