@@ -6,7 +6,7 @@ import numpy as np
 
 # Insert a new ratings into the database at the given location
 def newrating(request):
-	jsonstring = request.body
+	jsonstring = request.body.decode('utf-8')
 	jsondict = json.loads(jsonstring)
 	newrating = Rating(longitude = jsondict["long"], latitude= jsondict["lat"], rating = jsondict["rating"])
 	newrating.save()
@@ -23,7 +23,7 @@ def viewratings(request, longlo, longhi, latlo, lathi):
 # Map ratings based on longitude, latitude and date range in days
 def mapratings(request):
 	
-	rbody =request.body
+	rbody =request.body.decode('utf-8')
 	body = json.loads(rbody)
 	longlo = -90#body['longloJ']
 	longhi = 90#body['longhiJ']
