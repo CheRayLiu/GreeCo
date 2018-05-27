@@ -1,6 +1,6 @@
 function init(){
     map = new google.maps.Map(document.getElementById('ratemap'), {
-        center: {lat: 37.775, lng: -122.434},
+        center: {lat: 43.752594, lng: -79.313432},
         zoom: 15
     });
 
@@ -40,8 +40,8 @@ function initRateMap(lng, lat, rat) {
 
 function requestsRating(longlo, longhi, latlo, lathi, slide){
     console.log("made request")
-    var data = {"longlo":longlo, "longhi": longhi, "latlo": latlo, "lathi": lathi,"slide":slide}
-    var path = 'map/';
+    var data = {longloJ:longlo, longhiJ: longhi, latloJ: latlo, lathiJ: lathi,slideJ:slide}
+    var path = 'http://localhost:8000/ratings/map/';
     var xhr = new XMLHttpRequest();
     xhr.open("POST", path);
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");  //Send the proper header info
@@ -56,7 +56,7 @@ function requestsRating(longlo, longhi, latlo, lathi, slide){
             console.log("Server Response: Error"); //RME
         }
     };
-
+    console.log(data)
     var jsonString= JSON.stringify(data);     //generate JSON string
     xhr.send(jsonString);                       //send request to server
     // document.getElementById("console").innerHTML += "Sent request to " + path + ": "  + jsonString + "<br>"; //RME
@@ -125,7 +125,9 @@ function getPoints(lng, lat, rat) {
     var result = [];
     for (var i = 0 ; i < lat.length ; i++) {
         result.push(
-            {location: new google.maps.LatLng(latitude[i], longitude[i]), weight:rat[i]}
+            {location: new google.maps.LatLng(lat[i], lng[i]), weight:rat[i]}
             );
     }
+
+    return result
 }

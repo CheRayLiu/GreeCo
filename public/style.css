@@ -7,6 +7,7 @@ body {
 }
 
 .map-container{
-    border: solid blue;
+    /*border: solid blue;*/
     margin-top: 1.5rem;
+    min-height: 25rem;
 }
