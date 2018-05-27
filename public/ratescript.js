@@ -184,4 +184,5 @@ function addRating() {
 
 }
 
+
 init();
