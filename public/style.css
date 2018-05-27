@@ -11,3 +11,25 @@ body {
     margin-top: 1.5rem;
     min-height: 25rem;
 }
+
+.bg-dark {
+    background-color: #3F5E47 !important
+}
+
+h2 {
+    color: #3F5E47 !important
+}
+
+html {
+    min-height: 100%;
+    background-image: url(greeco_bkgd_2.png);
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+body{
+    background-color: transparent;
+    color: #3F5E47;
+}
+

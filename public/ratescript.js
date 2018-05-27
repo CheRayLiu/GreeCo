@@ -17,8 +17,6 @@ function init(){
 
     document.getElementById("rate-btn").addEventListener("click", getLocation);
 
-   // document.getElementById("subm").addEventListener("click", pushData);
-
     google.maps.event.addListener(map, "bounds_changed", function() {
        // send the new bounds back to your server
        var bounds = map.getBounds().toJSON();
@@ -66,7 +64,7 @@ var gradient = [
 function requestsRating(longlo, longhi, latlo, lathi, slide){
     console.log("made request")
     var data = {longloJ:longlo, longhiJ: longhi, latloJ: latlo, lathiJ: lathi,slideJ:slide}
-    var path = 'http://localhost:8000/ratings/map/';
+    var path = 'ratings/map/';
     var xhr = new XMLHttpRequest();
     xhr.open("POST", path);
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");  //Send the proper header info
@@ -81,7 +79,7 @@ function requestsRating(longlo, longhi, latlo, lathi, slide){
             console.log("Server Response: Error"); //RME
         }
     };
-    console.log(data)
+    console.log(data);
     var jsonString= JSON.stringify(data);     //generate JSON string
     xhr.send(jsonString);                       //send request to server
     // document.getElementById("console").innerHTML += "Sent request to " + path + ": "  + jsonString + "<br>"; //RME
@@ -107,13 +105,14 @@ function getLocation() {
             currentLocation = JSON.parse(JSON.stringify(pos));
           
             infoWindow.setPosition(pos);
-            infoWindow.setContent('Location: ' + pos.lat + "," + pos.lng);
+            infoWindow.setContent('You are Here');
             infoWindow.open(map);
             map.setCenter(pos);
 
             // Make rating panel visible
             document.getElementById("ratings-panel").classList.remove("display-none");
             document.getElementById("enter").addEventListener("click", addRating);
+            location.href = '#ratings-panel';
 
         }, function() {
             handleLocationError(true, infoWindow, map.getCenter());
@@ -165,7 +164,7 @@ function updateColors(){
 
 function addRating() {
     var params = JSON.stringify({lat:Number(currentLocation.lat), long:Number(currentLocation.lng), rating:Number(getLeafN())});
-    var path = 'http://localhost:8000/ratings/rate/';
+    var path = 'ratings/rate/';
     var xhr = new XMLHttpRequest();
     xhr.open("POST", path);
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -178,7 +177,7 @@ function addRating() {
         else{
             alert("Error");
         }
-    }
+    };
     xhr.send(params);
 
 }
