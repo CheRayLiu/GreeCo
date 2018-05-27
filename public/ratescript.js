@@ -83,7 +83,23 @@ function updateColors(){
 }
 
 function addRating() {
-    alert(getLeafN() + "," + currentLocation.lat + "," + currentLocation.lng);
+    //alert(getLeafN() + "," + currentLocation.lat + "," + currentLocation.lng);
+    var params = JSON.stringify({lat:Number(currentLocation.lat), long:Number(currentLocation.lng), rating:Number(getLeafN())});
+    var path = 'http://localhost:8000/ratings/rate/';
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", path);
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+    xhr.readystatechange = function(){
+        if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200){
+            alert("Success");
+
+        }
+        else{
+            alert("Error");
+        }
+    }
+    xhr.send(params);
 
 }
 
