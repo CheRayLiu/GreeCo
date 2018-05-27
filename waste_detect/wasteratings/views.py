@@ -1,7 +1,8 @@
 from django.http import HttpResponse
 from .models import Rating
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 import json
+import numpy as np
 
 # Insert a new ratings into the database at the given location
 def newrating(request):
