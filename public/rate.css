@@ -11,11 +11,11 @@
 .btn{
 	margin: 2px;
 	padding: 3px 6px;
-	width: 100px;
-	max-width: 110px;
+	/*width: 100px;*/
+	/*max-width: 110px;*/
 	font-size: 13px;
 	border-radius: 5px;
-	background-color: lightgray;
+	background-color: #e4ede6;
 	border: 1px  solid;
 }
 
@@ -63,4 +63,6 @@
 }
 
 /*Hide radio button*/
-.leaves {display:none}
+.leaves {
+    display:none
+}
