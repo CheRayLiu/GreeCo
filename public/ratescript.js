@@ -1,22 +1,71 @@
-var currentLocation;
-
 function init(){
-    document.getElementById("enter").addEventListener("click", getLeafN);
-    array = document.getElementsByClassName("leaflabel");
-    for(i = 0; i<array.length; i++){
-        array[i].addEventListener("click", updateColors);
-    }
-
-    initRateMap()
-}
-
-function initRateMap() {
     map = new google.maps.Map(document.getElementById('ratemap'), {
-        center: {lat: 43.6532, lng: -79.3832},
+        center: {lat: 43.752594, lng: -79.313432},
         zoom: 15
     });
 
     document.getElementById("rate-btn").addEventListener("click", getLocation);
+
+   // document.getElementById("subm").addEventListener("click", pushData);
+
+    google.maps.event.addListener(map, "bounds_changed", function() {
+       // send the new bounds back to your server
+       var bounds = map.getBounds().toJSON();
+       requestsRating(bounds["east"], bounds["west"], bounds["south"], bounds["north"],10);
+       console.log("call heatmap request");
+    });
+
+    requestsRating(-79.313432,-79.437372 ,43.752594,43.634184, 0);
+}
+
+function initRateMap(lng, lat, rat) {
+    heatmap = new google.maps.visualization.HeatmapLayer({
+        data: getPoints(lng, lat, rat),
+        map: map
+    })
+
+    //google.maps.event.addListener(map, "", function() {
+   // send the new bounds back to your server
+   //setBound(map.getBounds(),10);
+//});
+}
+
+
+
+
+
+
+
+
+
+function requestsRating(longlo, longhi, latlo, lathi, slide){
+    console.log("made request")
+    var data = {longloJ:longlo, longhiJ: longhi, latloJ: latlo, lathiJ: lathi,slideJ:slide}
+    var path = 'http://localhost:8000/ratings/map/';
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", path);
+    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");  //Send the proper header info
+
+    xhr.onreadystatechange = function() {//Call a function when the state changes (i.e. response comes back)
+        // Update the dropdown when response is ready
+        if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
+            var nodeList = JSON.parse(this.responseText);
+            initRateMap(nodeList['long'], nodeList['lat'], nodeList['wt'])
+        }
+        else{
+            console.log("Server Response: Error"); //RME
+        }
+    };
+    console.log(data)
+    var jsonString= JSON.stringify(data);     //generate JSON string
+    xhr.send(jsonString);                       //send request to server
+    // document.getElementById("console").innerHTML += "Sent request to " + path + ": "  + jsonString + "<br>"; //RME
+
+
+}
+
+function toggleHeatmap() {
+  heatmap.setMap(heatmap.getMap() ? null : map);
 }
 
 function getLocation() {
@@ -31,7 +80,7 @@ function getLocation() {
             };
 
             currentLocation = JSON.parse(JSON.stringify(pos));
-
+          
             infoWindow.setPosition(pos);
             infoWindow.setContent('Location: ' + pos.lat + "," + pos.lng);
             infoWindow.open(map);
@@ -41,7 +90,6 @@ function getLocation() {
             document.getElementById("ratings-panel").classList.remove("display-none");
             document.getElementById("enter").addEventListener("click", addRating);
 
-
         }, function() {
             handleLocationError(true, infoWindow, map.getCenter());
         });
@@ -50,15 +98,23 @@ function getLocation() {
         handleLocationError(false, infoWindow, map.getCenter());
     }
 
-    //TODO: DO the thing where you close the marker on the screen if more than one click. some for event listener perhaps.
-}
-
 function handleLocationError(browserHasGeolocation, infoWindow, pos) {
     infoWindow.setPosition(pos);
     infoWindow.setContent(browserHasGeolocation ?
         'Error: Please enable location services.' :
         'Error: Your browser doesn\'t support geolocation.');
     infoWindow.open(this.map);
+}
+
+function getPoints(lng, lat, rat) {
+
+    var result = [];
+    for (var i = 0 ; i < lat.length ; i++) {
+        result.push(
+            {location: new google.maps.LatLng(lat[i], lng[i]), weight:rat[i]}
+            );
+    }
+    return result
 }
 
 function getLeafN(){
@@ -71,7 +127,6 @@ function getLeafN(){
 }
 
 function updateColors(){
-    //alert("col");
     upTo = getLeafN()-1;
     var array = document.getElementsByName("leafn");
     for(i=0; i<= upTo;i++){
@@ -83,7 +138,6 @@ function updateColors(){
 }
 
 function addRating() {
-    //alert(getLeafN() + "," + currentLocation.lat + "," + currentLocation.lng);
     var params = JSON.stringify({lat:Number(currentLocation.lat), long:Number(currentLocation.lng), rating:Number(getLeafN())});
     var path = 'http://localhost:8000/ratings/rate/';
     var xhr = new XMLHttpRequest();
@@ -92,11 +146,11 @@ function addRating() {
 
     xhr.readystatechange = function(){
         if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200){
-            alert("Success");
+            //alert("Success");
 
         }
         else{
-            alert("Error");
+            //alert("Error");
         }
     }
     xhr.send(params);

@@ -20,11 +20,14 @@ def viewratings(request, longlo, longhi, latlo, lathi):
 	return HttpResponse(response)
 
 # Map ratings based on longitude, latitude and date range in days
-def mapratings(request, longlo, longhi, latlo, lathi, timeframe):
-	longlo = float(longlo)
-	longhi = float(longhi)
-	latlo = float(latlo)
-	lathi = float(lathi)
+def mapratings(request):
+	
+	rbody =request.body
+	body = json.loads(rbody)
+	longlo = body['longloJ']
+	longhi = body['longhiJ']
+	latlo = body['latloJ']
+	lathi = body['lathiJ']
 	steps = 10
 	#loop from left to right and up to down, creating equally spaced points with the right weights (average of the points in that box)
 
@@ -43,7 +46,7 @@ def mapratings(request, longlo, longhi, latlo, lathi, timeframe):
 	longrange = np.arange(longlo,longhi,dlong).tolist()
 	latrange = np.arange(latlo,lathi ,dlat).tolist()
 
-	date = datetime.now(timezone.utc) - timedelta(days=timeframe)
+	date = datetime.now(timezone.utc) - timedelta(days=body['slideJ'])
 
 	for x in longrange:
 		for y in latrange:
