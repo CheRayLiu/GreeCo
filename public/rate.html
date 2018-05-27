@@ -8,8 +8,10 @@
     <!-- Bootstrap CSS - Place before other stylesheets -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
     <link href="style.css" rel="stylesheet">
+    <link href="rate.css" rel="stylesheet">
+    <link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet">
 
-    <title>Hello, world!</title>
+    <title>TMapper</title>
 </head>
 <body>
     <header>
@@ -37,11 +39,38 @@
         <div class="starter-template">
             <h2>Rate Rate Rate</h2>
             <!--<h1>Get my location and Rate</h1>-->
-            <button type="button" class="btn btn-secondary">Get my location and rate!</button>
-            <p class="map-container" class="lead">Insert Map container here</p>
+            <button id="rate-btn" type="button" class="btn btn-secondary">Get my location and rate!</button>
+            <p id="ratemap" class="map-container" class="lead">Insert Map container here</p>
         </div>
 
+        <div id="ratings-panel" class="side-template display-none">
+            <h2>How clean?</h2>
+            <form id = "chooseleaves" >
+                <label class="fas fa-leaf fa-3x leaflabel">
+                    <input name ="leafn" class = "leaves" type="radio" value="1" checked/>
+                </label>
+                <label class="fas fa-leaf fa-3x leaflabel">
+                    <input name ="leafn" class = "leaves" type="radio" value="2"/>
+                </label>
+                <label class="fas fa-leaf fa-3x leaflabel">
+                    <input name ="leafn" class = "leaves" type="radio" value="3"/>
+                </label>
+                <label class="fas fa-leaf fa-3x leaflabel">
+                    <input name ="leafn" class = "leaves" type="radio" value="4"/>
+                </label>
+                <label class="fas fa-leaf fa-3x leaflabel">
+                    <input name ="leafn" class = "leaves" type="radio" value="5"/>
+                </label>
+                <br>
+                <button id="enter" class = "btn" type="button">S U B M I T</button>
+            </form>
+        </div>
     </main><!-- /.container -->
+
+
+    <!--Maps JS-->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAYKLNRDqxGjpM26iubuKEZVSLouOop-Xc&libraries=visualization"></script>
+    <script src="ratescript.js"></script>
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

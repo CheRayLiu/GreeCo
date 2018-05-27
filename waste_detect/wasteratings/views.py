@@ -1,14 +1,13 @@
 from django.http import HttpResponse
 from .models import Rating
-from datetime import datetime, timedelta, timezone
-import json 
-import numpy as np
-from math import sqrt
+from datetime import datetime, timedelta
+import json
 
 # Insert a new ratings into the database at the given location
-def newrating(request, long, lat, rating):
-	requestParams = json.reads(request.body)
-	newrating = Rating(longitude = requestParams["long"], latitude= requestParams["lat"], rating = requestParams["rating"])
+def newrating(request):
+	jsonstring = request.body
+	jsondict = json.loads(jsonstring)
+	newrating = Rating(longitude = jsondict["long"], latitude= jsondict["lat"], rating = jsondict["rating"])
 	newrating.save()
 	return HttpResponse(0)
 
