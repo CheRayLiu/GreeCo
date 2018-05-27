@@ -1,7 +1,8 @@
 from django.http import HttpResponse
 from .models import Rating
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 import json
+import numpy as np
 
 # Insert a new ratings into the database at the given location
 def newrating(request):
@@ -47,6 +48,7 @@ def mapratings(request):
 									, latitude__range=(latlo,lathi)							#filter by latitude range
 									, date__range = (date - timedelta(days=days), date)	#timeframe selected by user (days) -- lte means less than or equal to
 									)[:points]
+
 	
 	for rating in ratings:
 		long += [rating.longitude]
@@ -54,6 +56,7 @@ def mapratings(request):
 		avgrate+=[rating.rating]
 
 	
+
 
 	response = {'long': long, 'lat': lat, 'wt': avgrate}
 

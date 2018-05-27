@@ -1,4 +1,15 @@
+heatmap = new google.maps.visualization.HeatmapLayer({
+        data:[],
+        map: null
+    });
+
 function init(){
+    document.getElementById("enter").addEventListener("click", getLeafN);
+    array = document.getElementsByClassName("leaflabel");
+    for(i = 0; i<array.length; i++){
+        array[i].addEventListener("click", updateColors);
+    }
+
     map = new google.maps.Map(document.getElementById('ratemap'), {
         center: {lat: 43.752594, lng: -79.313432},
         zoom: 15
@@ -19,9 +30,13 @@ function init(){
 }
 
 function initRateMap(lng, lat, rat) {
+    heatmap.setMap(null);
     heatmap = new google.maps.visualization.HeatmapLayer({
         data: getPoints(lng, lat, rat),
-        map: map
+        map: map,
+        radius: 75,
+        dissipating: true,
+        maxIntensity: 5
     })
 
     //google.maps.event.addListener(map, "", function() {
@@ -30,11 +45,22 @@ function initRateMap(lng, lat, rat) {
 //});
 }
 
-
-
-
-
-
+var gradient = [
+        'rgba(0,0,0,0)',
+        'rgba(0,0,0,0)',
+        'rgba(0, 191, 255, 1)',
+        'rgba(0, 127, 255, 1)',
+        'rgba(0, 63, 255, 1)',
+        'rgba(0, 0, 255, 1)',
+        'rgba(0, 0, 223, 1)',
+        'rgba(0, 0, 191, 1)',
+        'rgba(0, 0, 159, 1)',
+        'rgba(0, 0, 127, 1)',
+        'rgba(63, 0, 91, 1)',
+        'rgba(127, 0, 63, 1)',
+        'rgba(191, 0, 31, 1)',
+        'rgba(255, 0, 0, 1)'
+        ];
 
 
 
@@ -97,6 +123,7 @@ function getLocation() {
         // Browser doesn't support Geolocation
         handleLocationError(false, infoWindow, map.getCenter());
     }
+}
 
 function handleLocationError(browserHasGeolocation, infoWindow, pos) {
     infoWindow.setPosition(pos);
@@ -114,7 +141,7 @@ function getPoints(lng, lat, rat) {
             {location: new google.maps.LatLng(lat[i], lng[i]), weight:rat[i]}
             );
     }
-    return result
+    return result;
 }
 
 function getLeafN(){
@@ -146,15 +173,16 @@ function addRating() {
 
     xhr.readystatechange = function(){
         if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200){
-            //alert("Success");
+            alert("Success");
 
         }
         else{
-            //alert("Error");
+            alert("Error");
         }
     }
     xhr.send(params);
 
 }
+
 
 init();
