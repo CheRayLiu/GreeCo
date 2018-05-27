@@ -8,8 +8,11 @@
     <!-- Bootstrap CSS - Place before other stylesheets -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
     <link href="style.css" rel="stylesheet">
+    <link href="rate.css" rel="stylesheet">
+    <link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet">
 
-    <title>Hello, world!</title>
+
+    <title>TMapper</title>
 </head>
 <body>
     <header>
@@ -37,11 +40,44 @@
         <div class="starter-template">
             <h2>Rate Rate Rate</h2>
             <!--<h1>Get my location and Rate</h1>-->
-            <button type="button" class="btn btn-secondary">Get my location and rate!</button>
-            <p class="map-container" class="lead">Insert Map container here</p>
+            <button id="rate-btn" type="button" class="btn btn-secondary"">Get my location and rate!</button>
+            <p id="ratemap" class="map-container" class="lead">Insert Map container here</p>
         </div>
 
+        <div class="side-template">
+            <h2>How dirty?</h2>
+
+        <form id = "subm" class = "leaves">
+
+            <label id="leaf-5" class="fas fa-leaf fa-3x">
+                <input type="radio" name="fb" value="small" />
+            </label>
+
+            <label id="leaf-4" class="fas fa-leaf fa-3x">
+                <input type="radio" name="fb" value="small" />
+            </label>
+
+            <label id="leaf-3" class="fas fa-leaf fa-3x">
+                <input type="radio" name="fb" value="small" />
+            </label>
+
+            <label id="leaf-2" class="fas fa-leaf fa-3x">
+                <input type="radio" name="fb" value="small" />
+            </label>
+
+            <label id="leaf-1" class="fas fa-leaf fa-3x">
+                <input type="radio" name="fb" value="small" />
+            </label>
+
+        </form>
+
+            <button onclick="toggleHeatmap()">Toggle Heatmap</button>
+
+
+            <button type="button" class="btn btn-green btn-secondary btn-outline-success">S U B M I T</button>
+        </div>
     </main><!-- /.container -->
+
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->

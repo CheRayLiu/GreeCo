@@ -31,13 +31,6 @@ function initRateMap(lng, lat, rat) {
 }
 
 
-
-
-
-
-
-
-
 function requestsRating(longlo, longhi, latlo, lathi, slide){
     console.log("made request")
     var data = {"longlo":longlo, "longhi": longhi, "latlo": latlo, "lathi": lathi,"slide":slide}
