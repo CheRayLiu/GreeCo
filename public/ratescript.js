@@ -11,7 +11,7 @@ function init(){
     }
 
     map = new google.maps.Map(document.getElementById('ratemap'), {
-        center: {lat: 43.752594, lng: -79.313432},
+        center: {lat: 43.657907, lng: -79.378673},
         zoom: 15
     });
 
