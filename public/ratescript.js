@@ -64,7 +64,7 @@ var gradient = [
 function requestsRating(longlo, longhi, latlo, lathi, slide){
     console.log("made request")
     var data = {longloJ:longlo, longhiJ: longhi, latloJ: latlo, lathiJ: lathi,slideJ:slide}
-    var path = 'http://localhost:8000/ratings/map/';
+    var path = 'ratings/map/';
     var xhr = new XMLHttpRequest();
     xhr.open("POST", path);
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");  //Send the proper header info
@@ -164,7 +164,7 @@ function updateColors(){
 
 function addRating() {
     var params = JSON.stringify({lat:Number(currentLocation.lat), long:Number(currentLocation.lng), rating:Number(getLeafN())});
-    var path = 'http://localhost:8000/ratings/rate/';
+    var path = 'ratings/rate/';
     var xhr = new XMLHttpRequest();
     xhr.open("POST", path);
     xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
